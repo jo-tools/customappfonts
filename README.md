@@ -7,10 +7,10 @@ Xojo example project
 ...
 
 ### ScreenShots
-<!--
 Example application: **macOS**  
 ![ScreenShot: Example App - macOS](screenshots/customappfonts-macos.png?raw=true)
 
+<!--
 Example application: **Windows**  
 ![ScreenShot: Example App - Windows](screenshots/customappfonts-windows.png?raw=true)
 

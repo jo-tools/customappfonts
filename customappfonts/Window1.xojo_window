@@ -18,12 +18,12 @@ Begin Window Window1
    MaxWidth        =   32000
    MenuBar         =   169725951
    MenuBarVisible  =   True
-   MinHeight       =   300
-   MinimizeButton  =   True
-   MinWidth        =   500
+   MinHeight       =   350
+   MinimizeButton  =   False
+   MinWidth        =   600
    Placement       =   0
-   Resizeable      =   True
-   Title           =   "Custom App Fonts"
+   Resizeable      =   False
+   Title           =   "#constAppName"
    Visible         =   True
    Width           =   600
    Begin Canvas cnvFonts
@@ -118,41 +118,6 @@ Begin Window Window1
       Visible         =   True
       Width           =   140
    End
-   Begin Label labXojoVersion
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   172
-      LockBottom      =   True
-      LockedInPosition=   True
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   False
-      Multiline       =   False
-      Scope           =   2
-      Selectable      =   False
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "XojoVersion"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   309
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   256
-   End
    Begin Canvas cnvAppIcon
       AcceptFocus     =   False
       AcceptTabs      =   False
@@ -162,7 +127,7 @@ Begin Window Window1
       Enabled         =   True
       EraseBackground =   True
       Height          =   64
-      HelpTag         =   "https://www.jo-tools.ch/xojo/customappfonts/"
+      HelpTag         =   "#constWebsiteUrl"
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   20
@@ -188,7 +153,7 @@ Begin Window Window1
       DataSource      =   ""
       Enabled         =   True
       Height          =   30
-      HelpTag         =   "https://www.jo-tools.ch/xojo/customappfonts/"
+      HelpTag         =   "#constWebsiteUrl"
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -204,7 +169,7 @@ Begin Window Window1
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Custom App Fonts"
+      Text            =   "AppName"
       TextAlign       =   1
       TextColor       =   &c0072D800
       TextFont        =   "System"
@@ -377,9 +342,16 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Open()
-		  Me.Title = "Custom App Fonts"
+		  Me.Title = constAppName
 		End Sub
 	#tag EndEvent
+
+
+	#tag Constant, Name = constAppName, Type = String, Dynamic = False, Default = \"Custom App Fonts", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = constWebsiteUrl, Type = String, Dynamic = False, Default = \"https://www.jo-tools.ch/xojo/customappfonts/", Scope = Private
+	#tag EndConstant
 
 
 #tag EndWindowCode
@@ -389,9 +361,15 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  #Pragma unused areas
 		  
-		  Dim colBackground As Color = &c0F1B26
-		  Dim colFont As Color = &cC4C4C4
-		  Dim colBorder As Color = &c172B3A
+		  Dim colBackground As Color = &cFFFFFF
+		  Dim colFont As Color = TextColor
+		  Dim colBorder As Color = DarkBevelColor
+		  
+		  If IsDarkMode Then
+		    colBackground = &c0D1821
+		    colFont = &cC4C4C4
+		    colBorder = &c172B3A
+		  End If
 		  
 		  g.ForeColor = colBackground
 		  g.FillRect(0, 0, g.Width, g.Height)
@@ -411,9 +389,9 @@ End
 		  
 		  Dim iTop As Integer = 45
 		  For i As Integer = 0 To UBound(sFonts)
-		    g.ForeColor = colFont
 		    g.TextFont = sFonts(i)
-		    g.DrawString("Font: " + sFonts(i), 20, iTop)
+		    g.DrawString("Font:", 20, iTop)
+		    g.DrawString(sFonts(i), 150, iTop)
 		    
 		    iTop = iTop + 50
 		  Next
@@ -481,13 +459,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events labXojoVersion
-	#tag Event
-		Sub Open()
-		  Me.Text = "Xojo Version: " + XojoVersionString
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events cnvAppIcon
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
@@ -497,7 +468,7 @@ End
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
-		    ShowURL("https://www.jo-tools.ch/xojo/customappfonts/")
+		    ShowURL(constWebsiteUrl)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -521,7 +492,7 @@ End
 #tag Events labAppName
 	#tag Event
 		Sub Open()
-		  Me.Text = "Custom App Fonts"
+		  Me.Text = constAppName
 		  Me.TextSize = 18
 		  Me.Bold = True
 		End Sub
@@ -529,7 +500,7 @@ End
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
-		    ShowURL("https://www.jo-tools.ch/xojo/customappfonts/")
+		    ShowURL(constWebsiteUrl)
 		  End If
 		End Sub
 	#tag EndEvent
