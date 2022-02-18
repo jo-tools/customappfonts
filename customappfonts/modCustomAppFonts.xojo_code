@@ -2,21 +2,21 @@
 Protected Module modCustomAppFonts
 	#tag Method, Flags = &h1
 		Protected Sub TemporarilyInstallFont(fontFile as FolderItem, privateFont as Boolean = true)
-		  if fontFile = nil then return
-		  if (not fontFile.Exists) then return
-		  if fontFile.Directory then return
+		  If (fontFile = Nil) Then Return
+		  If (Not fontFile.Exists) Then Return
+		  If fontFile.Directory Then Return
 		  
-		  #if TargetWindows then
+		  #If TargetWindows Then
 		    // Code from Windows Functionality Suite
 		    // https://github.com/arbp/WFS
 		    
-		    Soft Declare Sub AddFontResourceExW Lib "Gdi32" ( filename as WString, flags as Integer, reserved as Integer )
-		    Soft Declare Sub AddFontResourceA Lib "Gdi32" ( filename as CString )
-		    Soft Declare Sub AddFontResourceW Lib "Gdi32" ( filename as WString )
+		    Soft Declare Sub AddFontResourceExW Lib "Gdi32" (filename As WString, flags As Integer, reserved As Integer)
+		    Soft Declare Sub AddFontResourceA Lib "Gdi32" (filename As CString)
+		    Soft Declare Sub AddFontResourceW Lib "Gdi32" (filename As WString)
 		    
 		    Const FR_PRIVATE = &h10
 		    
-		    if privateFont and System.IsFunctionAvailable( "AddFontResourceExW", "Gdi32" ) then
+		    If privateFont And System.IsFunctionAvailable( "AddFontResourceExW", "Gdi32" ) Then
 		      // If the user wants to install it as a private font, then we need to
 		      // use the Ex APIs.  Otherwise, use the regular APIs.  We know
 		      // that AddFontResourceEx is available in Win2k and up, so if
@@ -24,18 +24,18 @@ Protected Module modCustomAppFonts
 		      // we can load the API as well.  We won't bother with the A
 		      // version of the call since we know the W version will be there.
 		      AddFontResourceExW( fontFile.NativePath, FR_PRIVATE, 0 )
-		    else
+		    Else
 		      // The user wants to install it as a public font, or they are running
 		      // on an OS without the ability to make private fonts
-		      if System.IsFunctionAvailable( "AddFontResourceW", "Gdi32" ) then
+		      If System.IsFunctionAvailable( "AddFontResourceW", "Gdi32" ) Then
 		        AddFontResourceW( fontFile.NativePath )
-		      else
+		      Else
 		        AddFontResourceA( fontFile.NativePath )
-		      end if
-		    end if
+		      End If
+		    End If
 		    
-		  #elseif TargetLinux then
-		    #pragma unused privateFont
+		  #ElseIf TargetLinux Then
+		    #Pragma unused privateFont
 		    // FontConfig documentation:
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/x102.html
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfiggetcurrent.html
@@ -44,57 +44,55 @@ Protected Module modCustomAppFonts
 		    
 		    // not supported: it's always treated as a private font
 		    
-		    if System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) and System.IsFunctionAvailable( "FcConfigAppFontAddFile", "libfontconfig" ) then
+		    If System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) And System.IsFunctionAvailable( "FcConfigAppFontAddFile", "libfontconfig" ) Then
 		      Soft Declare Function FcConfigGetCurrent Lib "libfontconfig" () As Ptr
 		      Soft Declare Function FcConfigAppFontAddFile Lib "libfontconfig" (ptr2FcConfig As Ptr, ptrToFile As CString) As Boolean
 		      
 		      //get the Ptr to FcConfig
-		      Dim ptrToFcConfig As Ptr = FcConfigGetCurrent()
+		      Dim ptrToFcConfig As Ptr = FcConfigGetCurrent
 		      
 		      //add FontFile
-		      if (not FcConfigAppFontAddFile(ptrToFCConfig, fontFile.NativePath)) then
+		      If (Not FcConfigAppFontAddFile(ptrToFCConfig, fontFile.NativePath)) Then
 		        'oops, it didn't work...
-		        break
-		      end if
-		    end if
+		        Break
+		      End If
+		    End If
 		    
-		  #elseif TargetMacOS then
-		    #pragma unused privateFont
+		  #ElseIf TargetMacOS Then
+		    #Pragma unused privateFont
 		    //Fonts are being added via Info.plist (-> the plist-item in the Project's Contents)
 		    
-		  #else
-		    #pragma unused privateFont
-		    //we don't know...
-		    
-		  #endif
+		  #EndIf
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Sub UninstallTemporaryFont(fontFile as FolderItem)
-		  if fontFile = nil then return
-		  if (not fontFile.Exists) then return
-		  if fontFile.Directory then return
+		  If (fontFile = Nil) Then Return
+		  If (Not fontFile.Exists) Then Return
+		  If fontFile.Directory Then Return
 		  
-		  #if TargetWindows then
+		  #If TargetWindows Then
+		    // Code from Windows Functionality Suite
+		    // https://github.com/arbp/WFS
 		    
-		    Soft Declare Sub RemoveFontResourceExW Lib "Gdi32" ( filename as WString, flags as Integer, reserved as Integer )
-		    Soft Declare Sub RemoveFontResourceA Lib "Gdi32" ( filename as CString )
-		    Soft Declare Sub RemoveFontResourceW Lib "Gdi32" ( filename as WString )
+		    Soft Declare Sub RemoveFontResourceExW Lib "Gdi32" (filename As WString, flags As Integer, reserved As Integer)
+		    Soft Declare Sub RemoveFontResourceA Lib "Gdi32" (filename As CString)
+		    Soft Declare Sub RemoveFontResourceW Lib "Gdi32" (filename As WString)
 		    
 		    Const FR_PRIVATE = &h10
 		    
-		    if System.IsFunctionAvailable( "RemoveFontResourceExW", "Gdi32" ) then
+		    If System.IsFunctionAvailable( "RemoveFontResourceExW", "Gdi32" ) Then
 		      RemoveFontResourceExW( fontFile.NativePath, FR_PRIVATE, 0 )
-		    end if
+		    End If
 		    
-		    if System.IsFunctionAvailable( "RemoveFontResourceW", "Gdi32" ) then
+		    If System.IsFunctionAvailable( "RemoveFontResourceW", "Gdi32" ) Then
 		      RemoveFontResourceW( fontFile.NativePath )
-		    else
+		    Else
 		      RemoveFontResourceA( fontFile.NativePath )
-		    end if
+		    End If
 		    
-		  #elseif TargetLinux then
+		  #ElseIf TargetLinux Then
 		    // FontConfig documentation:
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/x102.html
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfiggetcurrent.html
@@ -103,24 +101,21 @@ Protected Module modCustomAppFonts
 		    
 		    // note: we can only clear ALL app fonts!
 		    
-		    if System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) and System.IsFunctionAvailable( "FcConfigAppFontClear", "libfontconfig" ) then
+		    If System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) And System.IsFunctionAvailable( "FcConfigAppFontClear", "libfontconfig" ) Then
 		      Soft Declare Function FcConfigGetCurrent Lib "libfontconfig" () As Ptr
 		      Soft Declare Sub FcConfigAppFontClear Lib "libfontconfig" (ptr2FcConfig As Ptr)
 		      
 		      //get the Ptr to FcConfig
-		      Dim ptrToFcConfig As Ptr = FcConfigGetCurrent()
+		      Dim ptrToFcConfig As Ptr = FcConfigGetCurrent
 		      
 		      //clear ALL App Fonts
 		      FcConfigAppFontClear(ptrToFCConfig)
-		    end if
+		    End If
 		    
-		  #elseif TargetMacOS then
+		  #ElseIf TargetMacOS Then
 		    //Fonts are being added via Info.plist (-> the plist-item in the Project's Contents)
 		    
-		  #else
-		    //we don't know...
-		    
-		  #endif
+		  #EndIf
 		End Sub
 	#tag EndMethod
 

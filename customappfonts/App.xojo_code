@@ -3,38 +3,38 @@ Protected Class App
 Inherits Application
 	#tag Event
 		Sub Open()
-		  App.AutoQuit = true
+		  App.AutoQuit = True
 		  
-		  ReDim AppFontFiles(-1)
+		  Redim AppFontFiles(-1)
 		  
-		  #if TargetWindows or TargetLinux then
-		    Dim oFontFolder As FolderItem = me.ExecutableFile.Parent
-		    if (oFontFolder <> nil) and oFontFolder.Directory then oFontFolder = oFontFolder.Child("AppFonts")
-		    if (oFontFolder <> nil) and oFontFolder.Directory then
+		  #If TargetWindows Or TargetLinux Then
+		    Dim oFontFolder As FolderItem = Me.ExecutableFile.Parent
+		    If (oFontFolder <> Nil) And oFontFolder.Directory Then oFontFolder = oFontFolder.Child("AppFonts")
+		    If (oFontFolder <> Nil) And oFontFolder.Directory Then
 		      
 		      Dim oFontFiles() As FolderItem
 		      oFontFiles.Append(oFontFolder.Child("Pecita.otf"))
 		      oFontFiles.Append(oFontFolder.Child("PfefferMediaeval.otf"))
 		      oFontFiles.Append(oFontFolder.Child("Prida65.otf"))
 		      
-		      for each oCurrentFontFile As FolderItem in oFontFiles
-		        if (oCurrentFontFile = nil) then continue
-		        if (not oCurrentFontFile.Exists) then continue
-		        if oCurrentFontFile.Directory then continue
+		      For Each oCurrentFontFile As FolderItem In oFontFiles
+		        If (oCurrentFontFile = Nil) Then Continue
+		        If (Not oCurrentFontFile.Exists) Then Continue
+		        If oCurrentFontFile.Directory Then Continue
 		        
 		        //ok, append to array
 		        AppFontFiles.Append(oCurrentFontFile)
 		        
 		        //and let's install the font
 		        modCustomAppFonts.TemporarilyInstallFont(oCurrentFontFile)
-		      next
+		      Next
 		      
-		    end if
-		  #elseif TargetMacOS then
+		    End If
+		  #ElseIf TargetMacOS Then
 		    //Fonts are being added via Info.plist (-> the plist-item in the Project's Contents)
-		  #else
+		  #Else
 		    //we don't know...
-		  #endif
+		  #EndIf
 		  
 		End Sub
 	#tag EndEvent
