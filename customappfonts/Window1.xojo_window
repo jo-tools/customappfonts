@@ -414,7 +414,8 @@ End
 	#tag Event
 		Sub Open()
 		  #If TargetLinux Then
-		    Me.Height = 29
+		    Me.Height = 32
+		    Me.Top = Me.Top - 5
 		  #EndIf
 		  
 		  #If TargetWindows Or TargetLinux Then
@@ -444,7 +445,8 @@ End
 	#tag Event
 		Sub Open()
 		  #If TargetLinux Then
-		    Me.Height = 29
+		    Me.Height = 32
+		    Me.Top = Me.Top - 5
 		  #EndIf
 		  
 		  #If TargetWindows Or TargetLinux Then

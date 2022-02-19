@@ -35,14 +35,15 @@ Protected Module modCustomAppFonts
 		    End If
 		    
 		  #ElseIf TargetLinux Then
+		    // 'privateFont' is not supported: it's always treated as a private font
 		    #Pragma unused privateFont
+		    
 		    // FontConfig documentation:
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/x102.html
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfiggetcurrent.html
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfigappfontaddfile.html
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfigappfontclear.html
 		    
-		    // not supported: it's always treated as a private font
 		    
 		    If System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) And System.IsFunctionAvailable( "FcConfigAppFontAddFile", "libfontconfig" ) Then
 		      Soft Declare Function FcConfigGetCurrent Lib "libfontconfig" () As Ptr
@@ -99,7 +100,8 @@ Protected Module modCustomAppFonts
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfigappfontaddfile.html
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfigappfontclear.html
 		    
-		    // note: we can only clear ALL app fonts!
+		    // Note: we can only clear ALL app fonts!
+		    // And it seems this doesn't work with all distributions...
 		    
 		    If System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) And System.IsFunctionAvailable( "FcConfigAppFontClear", "libfontconfig" ) Then
 		      Soft Declare Function FcConfigGetCurrent Lib "libfontconfig" () As Ptr
