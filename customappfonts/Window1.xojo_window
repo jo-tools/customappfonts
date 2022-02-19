@@ -44,7 +44,7 @@ Begin Window Window1
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      Scope           =   0
+      Scope           =   2
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
@@ -361,6 +361,16 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  #Pragma unused areas
 		  
+		  Dim paintGraphics As Graphics = g
+		  Dim paintPicture As Picture
+		  
+		  #If TargetWindows And (XojoVersion < 2019.01) Then
+		    'might crash when trying to set .TextFont to a custom font
+		    'Workaround: Paint into a Picture, then draw Picture
+		    paintPicture = Self.BitmapForCaching(g.Width, g.Height)
+		    paintGraphics = paintPicture.Graphics
+		  #EndIf
+		  
 		  Dim colBackground As Color = &cFFFFFF
 		  Dim colFont As Color = TextColor
 		  Dim colBorder As Color = DarkBevelColor
@@ -371,13 +381,13 @@ End
 		    colBorder = &c172B3A
 		  End If
 		  
-		  g.ForeColor = colBackground
-		  g.FillRect(0, 0, g.Width, g.Height)
+		  paintGraphics.ForeColor = colBackground
+		  paintGraphics.FillRect(0, 0, paintGraphics.Width, paintGraphics.Height)
 		  
-		  g.ForeColor = colBorder
-		  g.DrawRect(0, 0, g.Width, g.Height)
+		  paintGraphics.ForeColor = colBorder
+		  paintGraphics.DrawRect(0, 0, paintGraphics.Width, paintGraphics.Height)
 		  
-		  g.ForeColor = colFont
+		  paintGraphics.ForeColor = colFont
 		  
 		  Dim sFonts() As String
 		  //our custom App Fonts
@@ -385,16 +395,22 @@ End
 		  sFonts.Append("Pecita")
 		  sFonts.Append("Prida65")
 		  
-		  g.TextSize = 32
+		  paintGraphics.TextSize = 32
 		  
 		  Dim iTop As Integer = 45
 		  For i As Integer = 0 To UBound(sFonts)
-		    g.TextFont = sFonts(i)
-		    g.DrawString("Font:", 20, iTop)
-		    g.DrawString(sFonts(i), 150, iTop)
+		    paintGraphics.TextFont = sFonts(i)
+		    paintGraphics.DrawString("Font:", 20, iTop)
+		    paintGraphics.DrawString(sFonts(i), 150, iTop)
 		    
 		    iTop = iTop + 50
 		  Next
+		  
+		  #If TargetWindows And (XojoVersion < 2019.01) Then
+		    'might crash when trying to set .TextFont to a custom font
+		    'Workaround: Paint into a Picture, then draw Picture
+		    g.DrawPicture(paintPicture, 0, 0)
+		  #EndIf
 		  
 		End Sub
 	#tag EndEvent
