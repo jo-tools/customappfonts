@@ -12,13 +12,11 @@ On Windows and Linux it's even possible to load/unload during runtime.
 Example application: **macOS**  
 ![ScreenShot: Example App - macOS](screenshots/customappfonts-macos.png?raw=true)
 
-<!--
 Example application: **Windows**  
 ![ScreenShot: Example App - Windows](screenshots/customappfonts-windows.png?raw=true)
 
 Example application: **Linux**  
 ![ScreenShot: Example App - Linux](screenshots/customappfonts-linux.png?raw=true)
--->
 
 ## Xojo
 ### Requirements
