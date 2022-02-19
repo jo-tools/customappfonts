@@ -4,8 +4,8 @@ Xojo example project
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Description
-This example Xojo project shows how one can embed custom App Fonts in Xojo-built applications.  
-The fonts are **not** being installed on the OS - they are only available while the application is running. This may be necessary, depending on the license of your fonts.  
+This example Xojo project shows how one can embed [custom App Fonts](./fonts) in Xojo-built applications.  
+The [fonts](./fonts) are **not** being installed on the OS - they are only available while the application is running. This may be necessary, depending on the license of your fonts.  
 On Windows and Linux it's even possible to load/unload during runtime.
 
 ### ScreenShots
@@ -27,11 +27,11 @@ The Desktop application Xojo example project ```CustomAppFonts.xojo_project``` i
 - API 1
 
 ### How to use in your own Xojo project?
-1. **macOS:** Fonts are being added using
+1. **macOS:** [Fonts](./fonts) are being added using
    - ```Info.plist``` *(see the corresponding project item)* 
    - Post-Build ```CopyFiles```-Step
      - Destination: ```Resources Folder```, Sub Directory: ```AppFonts```
-2. **Windows/Linux:** Fonts are being added using
+2. **Windows/Linux:** [Fonts](./fonts) are being added using
    - ```Declares``` in ```modCustomAppFonts``` *(see the corresponding Module in the project)* 
    - Post-Build ```CopyFiles```-Step
      - Destination: ```App Parent Folder```, Sub Directory: ```AppFonts```
