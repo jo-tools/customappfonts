@@ -338,6 +338,13 @@ End
 	#tag Event
 		Sub Opening()
 		  Me.Title = constAppName
+		  
+		  #If TargetMacOS Then
+		    Var rect As Xojo.Rect = Self.Bounds
+		    rect.Top = DesktopDisplay.DisplayAt(0).AvailableTop
+		    Self.Bounds = rect
+		  #EndIf
+		  
 		End Sub
 	#tag EndEvent
 
@@ -356,8 +363,8 @@ End
 		Sub Paint(g As Graphics, areas() As Rect)
 		  #Pragma unused areas
 		  
-		  Dim paintGraphics As Graphics = g
-		  Dim paintPicture As Picture
+		  Var paintGraphics As Graphics = g
+		  Var paintPicture As Picture
 		  
 		  #If TargetWindows And (XojoVersion < 2019.01) Then
 		    'might crash when trying to set .TextFont to a custom font
@@ -366,9 +373,9 @@ End
 		    paintGraphics = paintPicture.Graphics
 		  #EndIf
 		  
-		  Dim colBackground As Color = &cFFFFFF
-		  Dim colFont As Color = TextColor
-		  Dim colBorder As Color = DarkBevelColor
+		  Var colBackground As Color = &cFFFFFF
+		  Var colFont As Color = TextColor
+		  Var colBorder As Color = DarkBevelColor
 		  
 		  If IsDarkMode Then
 		    colBackground = &c0D1821
@@ -384,7 +391,7 @@ End
 		  
 		  paintGraphics.ForeColor = colFont
 		  
-		  Dim sFonts() As String
+		  Var sFonts() As String
 		  //our custom App Fonts
 		  sFonts.Append("Pfeffer Mediæval")
 		  sFonts.Append("Pecita")
@@ -392,7 +399,7 @@ End
 		  
 		  paintGraphics.TextSize = 32
 		  
-		  Dim iTop As Integer = 45
+		  Var iTop As Integer = 45
 		  For i As Integer = 0 To UBound(sFonts)
 		    paintGraphics.TextFont = sFonts(i)
 		    paintGraphics.DrawString("Font:", 20, iTop)

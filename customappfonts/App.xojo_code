@@ -8,11 +8,11 @@ Inherits DesktopApplication
 		  Redim AppFontFiles(-1)
 		  
 		  #If TargetWindows Or TargetLinux Then
-		    Dim oFontFolder As FolderItem = Me.ExecutableFile.Parent
+		    Var oFontFolder As FolderItem = Me.ExecutableFile.Parent
 		    If (oFontFolder <> Nil) And oFontFolder.Directory Then oFontFolder = oFontFolder.Child("AppFonts")
 		    If (oFontFolder <> Nil) And oFontFolder.Directory Then
 		      
-		      Dim oFontFiles() As FolderItem
+		      Var oFontFiles() As FolderItem
 		      oFontFiles.Append(oFontFolder.Child("Pecita.otf"))
 		      oFontFiles.Append(oFontFolder.Child("PfefferMediaeval.otf"))
 		      oFontFiles.Append(oFontFolder.Child("Prida65.otf"))
