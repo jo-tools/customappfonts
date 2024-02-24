@@ -4,7 +4,7 @@ Protected Module modCustomAppFonts
 		Protected Sub TemporarilyInstallFont(fontFile as FolderItem, privateFont as Boolean = true)
 		  If (fontFile = Nil) Then Return
 		  If (Not fontFile.Exists) Then Return
-		  If fontFile.Directory Then Return
+		  If fontFile.IsFolder Then Return
 		  
 		  #If TargetWindows Then
 		    // Code from Windows Functionality Suite
@@ -71,7 +71,7 @@ Protected Module modCustomAppFonts
 		Protected Sub UninstallTemporaryFont(fontFile as FolderItem)
 		  If (fontFile = Nil) Then Return
 		  If (Not fontFile.Exists) Then Return
-		  If fontFile.Directory Then Return
+		  If fontFile.IsFolder Then Return
 		  
 		  #If TargetWindows Then
 		    // Code from Windows Functionality Suite

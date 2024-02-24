@@ -9,8 +9,8 @@ Inherits DesktopApplication
 		  
 		  #If TargetWindows Or TargetLinux Then
 		    Var oFontFolder As FolderItem = Me.ExecutableFile.Parent
-		    If (oFontFolder <> Nil) And oFontFolder.Directory Then oFontFolder = oFontFolder.Child("AppFonts")
-		    If (oFontFolder <> Nil) And oFontFolder.Directory Then
+		    If (oFontFolder <> Nil) And oFontFolder.IsFolder Then oFontFolder = oFontFolder.Child("AppFonts")
+		    If (oFontFolder <> Nil) And oFontFolder.IsFolder Then
 		      
 		      Var oFontFiles() As FolderItem
 		      oFontFiles.Append(oFontFolder.Child("Pecita.otf"))
@@ -20,7 +20,7 @@ Inherits DesktopApplication
 		      For Each oCurrentFontFile As FolderItem In oFontFiles
 		        If (oCurrentFontFile = Nil) Then Continue
 		        If (Not oCurrentFontFile.Exists) Then Continue
-		        If oCurrentFontFile.Directory Then Continue
+		        If oCurrentFontFile.IsFolder Then Continue
 		        
 		        //ok, append to array
 		        AppFontFiles.Append(oCurrentFontFile)
@@ -41,7 +41,9 @@ Inherits DesktopApplication
 
 	#tag Event
 		Function UnhandledException(error As RuntimeException) As Boolean
-		  MsgBox "Unhandled Exception: " + error.Message + EndOfLine + Join(error.Stack, EndOfLine)
+		  MessageBox "Unhandled Exception: " + error.Message + EndOfLine + String.FromArray(error.Stack, EndOfLine)
+		  
+		  
 		End Function
 	#tag EndEvent
 

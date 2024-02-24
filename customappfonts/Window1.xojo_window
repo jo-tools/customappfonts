@@ -373,36 +373,36 @@ End
 		  #EndIf
 		  
 		  Var colBackground As Color = &cFFFFFF
-		  Var colFont As Color = TextColor
-		  Var colBorder As Color = DarkBevelColor
+		  Var colFont As Color = Color.TextColor
+		  Var colBorder As Color = Color.DarkBevelColor
 		  
-		  If IsDarkMode Then
+		  If Color.IsDarkMode Then
 		    colBackground = &c0D1821
 		    colFont = &cC4C4C4
 		    colBorder = &c172B3A
 		  End If
 		  
-		  paintGraphics.ForeColor = colBackground
-		  paintGraphics.FillRect(0, 0, paintGraphics.Width, paintGraphics.Height)
+		  paintGraphics.DrawingColor = colBackground
+		  paintGraphics.FillRectangle(0, 0, paintGraphics.Width, paintGraphics.Height)
 		  
-		  paintGraphics.ForeColor = colBorder
-		  paintGraphics.DrawRect(0, 0, paintGraphics.Width, paintGraphics.Height)
+		  paintGraphics.DrawingColor = colBorder
+		  paintGraphics.DrawRectangle(0, 0, paintGraphics.Width, paintGraphics.Height)
 		  
-		  paintGraphics.ForeColor = colFont
+		  paintGraphics.DrawingColor = colFont
 		  
 		  Var sFonts() As String
 		  //our custom App Fonts
-		  sFonts.Append("Pfeffer Mediæval")
-		  sFonts.Append("Pecita")
-		  sFonts.Append("Prida65")
+		  sFonts.Add("Pfeffer Mediæval")
+		  sFonts.Add("Pecita")
+		  sFonts.Add("Prida65")
 		  
-		  paintGraphics.TextSize = 32
+		  paintGraphics.FontSize = 32
 		  
 		  Var iTop As Integer = 45
-		  For i As Integer = 0 To UBound(sFonts)
-		    paintGraphics.TextFont = sFonts(i)
-		    paintGraphics.DrawString("Font:", 20, iTop)
-		    paintGraphics.DrawString(sFonts(i), 150, iTop)
+		  For i As Integer = 0 To sFonts.LastIndex
+		    paintGraphics.FontName = sFonts(i)
+		    paintGraphics.DrawText("Font:", 20, iTop)
+		    paintGraphics.DrawText(sFonts(i), 150, iTop)
 		    
 		    iTop = iTop + 50
 		  Next
@@ -491,7 +491,7 @@ End
 	#tag Event
 		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
-		    ShowURL(constWebsiteUrl)
+		    System.GotoURL(constWebsiteUrl)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -526,7 +526,7 @@ End
 	#tag Event
 		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
-		    ShowURL(constWebsiteUrl)
+		    System.GotoURL(constWebsiteUrl)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -585,7 +585,7 @@ End
 	#tag Event
 		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
-		    ShowURL("mailto:xojo@jo-tools.ch")
+		    System.GotoURL("mailto:xojo@jo-tools.ch")
 		  End If
 		End Sub
 	#tag EndEvent
@@ -595,13 +595,11 @@ End
 		Sub Paint(g As Graphics, areas() As Rect)
 		  #Pragma unused areas
 		  
-		  g.ForeColor = &cFFFFFF
-		  #If (XojoVersion >= 2018.03) Then
-		    If IsDarkMode Then g.ForeColor = &cD0D0D0
-		  #EndIf
-		  g.FillRect(0, 0, g.Width, g.Height)
-		  g.ForeColor = &c909090
-		  g.DrawRect(0, 0, g.Width, g.Height)
+		  g.DrawingColor = &cFFFFFF
+		  If Color.IsDarkMode Then g.DrawingColor = &cD0D0D0
+		  g.FillRectangle(0, 0, g.Width, g.Height)
+		  g.DrawingColor = &c909090
+		  g.DrawRectangle(0, 0, g.Width, g.Height)
 		  g.DrawPicture(PayPal, 3, 2, 100, 26, 0, 0, PayPal.Width, PayPal.Height)
 		End Sub
 	#tag EndEvent
@@ -619,7 +617,7 @@ End
 	#tag Event
 		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
-		    ShowURL("https://paypal.me/jotools")
+		    System.GotoURL("https://paypal.me/jotools")
 		  End If
 		End Sub
 	#tag EndEvent
