@@ -29,7 +29,6 @@ Begin DesktopWindow Window1
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
-      DoubleBuffer    =   False
       Enabled         =   True
       Height          =   181
       HelpTag         =   ""
@@ -120,7 +119,6 @@ Begin DesktopWindow Window1
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
-      DoubleBuffer    =   False
       Enabled         =   True
       Height          =   64
       HelpTag         =   "#constWebsiteUrl"
@@ -145,8 +143,6 @@ Begin DesktopWindow Window1
    Begin DesktopLabel labAppName
       AutoDeactivate  =   True
       Bold            =   True
-      DataField       =   ""
-      DataSource      =   ""
       Enabled         =   True
       Height          =   30
       HelpTag         =   "#constWebsiteUrl"
@@ -180,8 +176,6 @@ Begin DesktopWindow Window1
    Begin DesktopLabel labThanks
       AutoDeactivate  =   True
       Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
       Enabled         =   True
       Height          =   30
       HelpTag         =   ""
@@ -215,8 +209,6 @@ Begin DesktopWindow Window1
    Begin DesktopLabel labAppVersion
       AutoDeactivate  =   True
       Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
       Enabled         =   True
       Height          =   30
       HelpTag         =   ""
@@ -250,8 +242,6 @@ Begin DesktopWindow Window1
    Begin DesktopLabel labContact
       AutoDeactivate  =   True
       Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
       Enabled         =   True
       Height          =   30
       HelpTag         =   "xojo@jo-tools.ch"
@@ -287,7 +277,6 @@ Begin DesktopWindow Window1
       AcceptTabs      =   False
       AutoDeactivate  =   True
       Backdrop        =   0
-      DoubleBuffer    =   False
       Enabled         =   True
       Height          =   30
       HelpTag         =   "https://paypal.me/jotools"
@@ -310,6 +299,7 @@ Begin DesktopWindow Window1
       Width           =   106
    End
    Begin DesktopSeparator sepTop
+      AllowTabStop    =   True
       AutoDeactivate  =   True
       Enabled         =   True
       Height          =   3
@@ -325,7 +315,6 @@ Begin DesktopWindow Window1
       Scope           =   2
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   100
       Transparent     =   True
       Visible         =   True
@@ -437,7 +426,7 @@ End
 		  #EndIf
 		  
 		  #If TargetWindows Or TargetLinux Then
-		    Me.Enabled = (UBound(App.AppFontFiles) >= 0)
+		    Me.Enabled = (App.AppFontFiles.LastIndex >= 0)
 		  #ElseIf TargetMacOS Then
 		    //not possible, as Fonts are always (temporary) available for this app
 		    Me.Enabled = False
@@ -469,7 +458,7 @@ End
 		  #EndIf
 		  
 		  #If TargetWindows Or TargetLinux Then
-		    Me.Enabled = (UBound(App.AppFontFiles) >= 0)
+		    Me.Enabled = (App.AppFontFiles.LastIndex >= 0)
 		  #ElseIf TargetMacOS Then
 		    //not possible, as Fonts are always (temporary) available for this app
 		    Me.Enabled = False

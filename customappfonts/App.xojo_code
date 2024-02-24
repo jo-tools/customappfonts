@@ -13,9 +13,9 @@ Inherits DesktopApplication
 		    If (oFontFolder <> Nil) And oFontFolder.IsFolder Then
 		      
 		      Var oFontFiles() As FolderItem
-		      oFontFiles.Append(oFontFolder.Child("Pecita.otf"))
-		      oFontFiles.Append(oFontFolder.Child("PfefferMediaeval.otf"))
-		      oFontFiles.Append(oFontFolder.Child("Prida65.otf"))
+		      oFontFiles.Add(oFontFolder.Child("Pecita.otf"))
+		      oFontFiles.Add(oFontFolder.Child("PfefferMediaeval.otf"))
+		      oFontFiles.Add(oFontFolder.Child("Prida65.otf"))
 		      
 		      For Each oCurrentFontFile As FolderItem In oFontFiles
 		        If (oCurrentFontFile = Nil) Then Continue
@@ -23,7 +23,7 @@ Inherits DesktopApplication
 		        If oCurrentFontFile.IsFolder Then Continue
 		        
 		        //ok, append to array
-		        AppFontFiles.Append(oCurrentFontFile)
+		        AppFontFiles.Add(oCurrentFontFile)
 		        
 		        //and let's install the font
 		        modCustomAppFonts.TemporarilyInstallFont(oCurrentFontFile)
