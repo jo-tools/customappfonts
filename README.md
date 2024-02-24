@@ -23,8 +23,8 @@ Example application: **Linux**
 [Xojo](https://www.xojo.com/) is a rapid application development for Desktop, Web, Mobile & Raspberry Pi.  
 
 The Desktop application Xojo example project ```CustomAppFonts.xojo_project``` is using:
-- Xojo 2018r4
-- API 1
+- Xojo 2023r4
+- API 2
 
 ### How to use in your own Xojo project?
 1. **macOS:** [Fonts](./fonts) are being added using
