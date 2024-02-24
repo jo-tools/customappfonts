@@ -364,12 +364,11 @@ End
 		  #Pragma unused areas
 		  
 		  Var paintGraphics As Graphics = g
-		  Var paintPicture As Picture
 		  
 		  #If TargetWindows And (XojoVersion < 2019.01) Then
 		    'might crash when trying to set .TextFont to a custom font
 		    'Workaround: Paint into a Picture, then draw Picture
-		    paintPicture = Self.BitmapForCaching(g.Width, g.Height)
+		    Var paintPicture As Picture = Self.BitmapForCaching(g.Width, g.Height)
 		    paintGraphics = paintPicture.Graphics
 		  #EndIf
 		  
@@ -484,6 +483,8 @@ End
 #tag Events cnvAppIcon
 	#tag Event
 		Sub Paint(g As Graphics, areas() As Rect)
+		  #Pragma unused areas
+		  
 		  g.DrawPicture(AppIcon_64, 0, 0)
 		End Sub
 	#tag EndEvent
@@ -496,6 +497,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  #Pragma unused x
+		  #Pragma unused y
+		  
 		  Return True
 		End Function
 	#tag EndEvent
@@ -528,6 +532,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  #Pragma unused x
+		  #Pragma unused y
+		  
 		  Return True
 		End Function
 	#tag EndEvent
@@ -569,6 +576,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  #Pragma unused x
+		  #Pragma unused y
+		  
 		  Return True
 		End Function
 	#tag EndEvent
@@ -583,6 +593,8 @@ End
 #tag Events cnvPayPal
 	#tag Event
 		Sub Paint(g As Graphics, areas() As Rect)
+		  #Pragma unused areas
+		  
 		  g.ForeColor = &cFFFFFF
 		  #If (XojoVersion >= 2018.03) Then
 		    If IsDarkMode Then g.ForeColor = &cD0D0D0
@@ -613,6 +625,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  #Pragma unused x
+		  #Pragma unused y
+		  
 		  Return True
 		End Function
 	#tag EndEvent
