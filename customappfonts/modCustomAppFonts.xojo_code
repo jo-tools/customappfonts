@@ -4,7 +4,7 @@ Protected Module modCustomAppFonts
 		Protected Sub TemporarilyInstallFont(fontFile as FolderItem, privateFont as Boolean = true)
 		  If (fontFile = Nil) Then Return
 		  If (Not fontFile.Exists) Then Return
-		  If fontFile.Directory Then Return
+		  If fontFile.IsFolder Then Return
 		  
 		  #If TargetWindows Then
 		    // Code from Windows Functionality Suite
@@ -50,7 +50,7 @@ Protected Module modCustomAppFonts
 		      Soft Declare Function FcConfigAppFontAddFile Lib "libfontconfig" (ptr2FcConfig As Ptr, ptrToFile As CString) As Boolean
 		      
 		      //get the Ptr to FcConfig
-		      Dim ptrToFcConfig As Ptr = FcConfigGetCurrent
+		      Var ptrToFcConfig As Ptr = FcConfigGetCurrent
 		      
 		      //add FontFile
 		      If (Not FcConfigAppFontAddFile(ptrToFCConfig, fontFile.NativePath)) Then
@@ -71,7 +71,7 @@ Protected Module modCustomAppFonts
 		Protected Sub UninstallTemporaryFont(fontFile as FolderItem)
 		  If (fontFile = Nil) Then Return
 		  If (Not fontFile.Exists) Then Return
-		  If fontFile.Directory Then Return
+		  If fontFile.IsFolder Then Return
 		  
 		  #If TargetWindows Then
 		    // Code from Windows Functionality Suite
@@ -108,7 +108,7 @@ Protected Module modCustomAppFonts
 		      Soft Declare Sub FcConfigAppFontClear Lib "libfontconfig" (ptr2FcConfig As Ptr)
 		      
 		      //get the Ptr to FcConfig
-		      Dim ptrToFcConfig As Ptr = FcConfigGetCurrent
+		      Var ptrToFcConfig As Ptr = FcConfigGetCurrent
 		      
 		      //clear ALL App Fonts
 		      FcConfigAppFontClear(ptrToFCConfig)
@@ -137,7 +137,9 @@ Protected Module modCustomAppFonts
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -145,12 +147,15 @@ Protected Module modCustomAppFonts
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -158,6 +163,7 @@ Protected Module modCustomAppFonts
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -165,6 +171,7 @@ Protected Module modCustomAppFonts
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Module

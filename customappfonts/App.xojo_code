@@ -1,29 +1,29 @@
 #tag Class
 Protected Class App
-Inherits Application
+Inherits DesktopApplication
 	#tag Event
-		Sub Open()
-		  App.AutoQuit = True
+		Sub Opening()
+		  App.AllowAutoQuit = True
 		  
 		  Redim AppFontFiles(-1)
 		  
 		  #If TargetWindows Or TargetLinux Then
-		    Dim oFontFolder As FolderItem = Me.ExecutableFile.Parent
-		    If (oFontFolder <> Nil) And oFontFolder.Directory Then oFontFolder = oFontFolder.Child("AppFonts")
-		    If (oFontFolder <> Nil) And oFontFolder.Directory Then
+		    Var oFontFolder As FolderItem = Me.ExecutableFile.Parent
+		    If (oFontFolder <> Nil) And oFontFolder.IsFolder Then oFontFolder = oFontFolder.Child("AppFonts")
+		    If (oFontFolder <> Nil) And oFontFolder.IsFolder Then
 		      
-		      Dim oFontFiles() As FolderItem
-		      oFontFiles.Append(oFontFolder.Child("Pecita.otf"))
-		      oFontFiles.Append(oFontFolder.Child("PfefferMediaeval.otf"))
-		      oFontFiles.Append(oFontFolder.Child("Prida65.otf"))
+		      Var oFontFiles() As FolderItem
+		      oFontFiles.Add(oFontFolder.Child("Pecita.otf"))
+		      oFontFiles.Add(oFontFolder.Child("PfefferMediaeval.otf"))
+		      oFontFiles.Add(oFontFolder.Child("Prida65.otf"))
 		      
 		      For Each oCurrentFontFile As FolderItem In oFontFiles
 		        If (oCurrentFontFile = Nil) Then Continue
 		        If (Not oCurrentFontFile.Exists) Then Continue
-		        If oCurrentFontFile.Directory Then Continue
+		        If oCurrentFontFile.IsFolder Then Continue
 		        
 		        //ok, append to array
-		        AppFontFiles.Append(oCurrentFontFile)
+		        AppFontFiles.Add(oCurrentFontFile)
 		        
 		        //and let's install the font
 		        modCustomAppFonts.TemporarilyInstallFont(oCurrentFontFile)
@@ -41,7 +41,9 @@ Inherits Application
 
 	#tag Event
 		Function UnhandledException(error As RuntimeException) As Boolean
-		  MsgBox "Unhandled Exception: " + error.Message + EndOfLine + Join(error.Stack, EndOfLine)
+		  MessageBox "Unhandled Exception: " + error.Message + EndOfLine + String.FromArray(error.Stack, EndOfLine)
+		  
+		  
 		End Function
 	#tag EndEvent
 
