@@ -1,31 +1,30 @@
-#tag Window
-Begin Window Window1
-   BackColor       =   &cFFFFFF00
+#tag DesktopWindow
+Begin DesktopWindow Window1
    Backdrop        =   0
-   CloseButton     =   True
+   BackgroundColor =   &cFFFFFF00
    Composite       =   False
-   Frame           =   0
+   DefaultLocation =   0
    FullScreen      =   False
-   FullScreenButton=   False
-   HasBackColor    =   False
+   HasBackgroundColor=   False
+   HasCloseButton  =   True
+   HasFullScreenButton=   False
+   HasMaximizeButton=   False
+   HasMinimizeButton=   False
    Height          =   350
    ImplicitInstance=   True
-   LiveResize      =   "True"
    MacProcID       =   0
-   MaxHeight       =   32000
-   MaximizeButton  =   False
-   MaxWidth        =   32000
+   MaximumHeight   =   32000
+   MaximumWidth    =   32000
    MenuBar         =   169725951
    MenuBarVisible  =   True
-   MinHeight       =   350
-   MinimizeButton  =   False
-   MinWidth        =   600
-   Placement       =   0
+   MinimumHeight   =   350
+   MinimumWidth    =   600
    Resizeable      =   False
    Title           =   "#constAppName"
+   Type            =   0
    Visible         =   True
    Width           =   600
-   Begin Canvas cnvFonts
+   Begin DesktopCanvas cnvFonts
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
@@ -52,7 +51,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   560
    End
-   Begin PushButton btnUninstall
+   Begin DesktopButton btnUninstall
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   0
@@ -84,7 +83,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   140
    End
-   Begin PushButton btnInstall
+   Begin DesktopButton btnInstall
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   0
@@ -116,7 +115,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   140
    End
-   Begin Canvas cnvAppIcon
+   Begin DesktopCanvas cnvAppIcon
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
@@ -143,7 +142,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   64
    End
-   Begin Label labAppName
+   Begin DesktopLabel labAppName
       AutoDeactivate  =   True
       Bold            =   True
       DataField       =   ""
@@ -167,7 +166,7 @@ Begin Window Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "AppName"
-      TextAlign       =   1
+      TextAlign       =   2
       TextColor       =   &c0072D800
       TextFont        =   "System"
       TextSize        =   0.0
@@ -178,7 +177,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   200
    End
-   Begin Label labThanks
+   Begin DesktopLabel labThanks
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -202,7 +201,7 @@ Begin Window Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Would you like to say 'Thank you'?"
-      TextAlign       =   2
+      TextAlign       =   3
       TextColor       =   &c66666600
       TextFont        =   "SmallSystem"
       TextSize        =   0.0
@@ -213,7 +212,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   209
    End
-   Begin Label labAppVersion
+   Begin DesktopLabel labAppVersion
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -237,7 +236,7 @@ Begin Window Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "AppVersion"
-      TextAlign       =   1
+      TextAlign       =   2
       TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
@@ -248,7 +247,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   200
    End
-   Begin Label labContact
+   Begin DesktopLabel labContact
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -272,7 +271,7 @@ Begin Window Window1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "Contact"
-      TextAlign       =   1
+      TextAlign       =   2
       TextColor       =   &c0072CE00
       TextFont        =   "System"
       TextSize        =   0.0
@@ -283,7 +282,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   70
    End
-   Begin Canvas cnvPayPal
+   Begin DesktopCanvas cnvPayPal
       AcceptFocus     =   False
       AcceptTabs      =   False
       AutoDeactivate  =   True
@@ -310,7 +309,7 @@ Begin Window Window1
       Visible         =   True
       Width           =   106
    End
-   Begin Separator sepTop
+   Begin DesktopSeparator sepTop
       AutoDeactivate  =   True
       Enabled         =   True
       Height          =   3
@@ -333,11 +332,11 @@ Begin Window Window1
       Width           =   600
    End
 End
-#tag EndWindow
+#tag EndDesktopWindow
 
 #tag WindowCode
 	#tag Event
-		Sub Open()
+		Sub Opening()
 		  Me.Title = constAppName
 		End Sub
 	#tag EndEvent
@@ -354,7 +353,7 @@ End
 
 #tag Events cnvFonts
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		Sub Paint(g As Graphics, areas() As Rect)
 		  #Pragma unused areas
 		  
 		  Dim paintGraphics As Graphics = g
@@ -413,18 +412,19 @@ End
 #tag EndEvents
 #tag Events btnUninstall
 	#tag Event
-		Sub Action()
+		Sub Pressed()
 		  #If TargetWindows Or TargetLinux Then
 		    For Each oCurrentFontFile As FolderItem In App.AppFontFiles
 		      modCustomAppFonts.UninstallTemporaryFont(oCurrentFontFile)
 		    Next
 		  #EndIf
 		  
-		  cnvFonts.Invalidate
+		  cnvFonts.Refresh(False)
+		  
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Open()
+		Sub Opening()
 		  #If TargetLinux Then
 		    Me.Height = 32
 		    Me.Top = Me.Top - 5
@@ -444,18 +444,19 @@ End
 #tag EndEvents
 #tag Events btnInstall
 	#tag Event
-		Sub Action()
+		Sub Pressed()
 		  #If TargetWindows Or TargetLinux Then
 		    For Each oCurrentFontFile As FolderItem In App.AppFontFiles
 		      modCustomAppFonts.TemporarilyInstallFont(oCurrentFontFile)
 		    Next
 		  #EndIf
 		  
-		  cnvFonts.Invalidate
+		  cnvFonts.Refresh(False)
+		  
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Open()
+		Sub Opening()
 		  #If TargetLinux Then
 		    Me.Height = 32
 		    Me.Top = Me.Top - 5
@@ -475,19 +476,19 @@ End
 #tag EndEvents
 #tag Events cnvAppIcon
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		Sub Paint(g As Graphics, areas() As Rect)
 		  g.DrawPicture(AppIcon_64, 0, 0)
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
+		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
 		    ShowURL(constWebsiteUrl)
 		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		Function MouseDown(x As Integer, y As Integer) As Boolean
 		  Return True
 		End Function
 	#tag EndEvent
@@ -505,21 +506,21 @@ End
 #tag EndEvents
 #tag Events labAppName
 	#tag Event
-		Sub Open()
+		Sub Opening()
 		  Me.Text = constAppName
-		  Me.TextSize = 18
+		  Me.FontSize = 18
 		  Me.Bold = True
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
+		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
 		    ShowURL(constWebsiteUrl)
 		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		Function MouseDown(x As Integer, y As Integer) As Boolean
 		  Return True
 		End Function
 	#tag EndEvent
@@ -537,9 +538,9 @@ End
 #tag EndEvents
 #tag Events labAppVersion
 	#tag Event
-		Sub Open()
-		  If (App.ShortVersion <> "") Then
-		    Me.Text = App.ShortVersion
+		Sub Opening()
+		  If (App.Version <> "") Then
+		    Me.Text = App.Version
 		    Return
 		  End If
 		  
@@ -560,12 +561,12 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		Function MouseDown(x As Integer, y As Integer) As Boolean
 		  Return True
 		End Function
 	#tag EndEvent
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
+		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
 		    ShowURL("mailto:xojo@jo-tools.ch")
 		  End If
@@ -574,7 +575,7 @@ End
 #tag EndEvents
 #tag Events cnvPayPal
 	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		Sub Paint(g As Graphics, areas() As Rect)
 		  g.ForeColor = &cFFFFFF
 		  #If (XojoVersion >= 2018.03) Then
 		    If IsDarkMode Then g.ForeColor = &cD0D0D0
@@ -597,14 +598,14 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
+		Sub MouseUp(x As Integer, y As Integer)
 		  If (x >= 0) And (x < Me.Width) And (y > 0) And (y < Me.Height) Then
 		    ShowURL("https://paypal.me/jotools")
 		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		Function MouseDown(x As Integer, y As Integer) As Boolean
 		  Return True
 		End Function
 	#tag EndEvent

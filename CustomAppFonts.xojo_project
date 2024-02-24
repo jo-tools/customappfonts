@@ -1,11 +1,11 @@
 Type=Desktop
 RBProjectVersion=2023.04
-MinIDEVersion=20150400
+MinIDEVersion=20210300
 OrigIDEVersion=00000000
 Folder=customappfonts;customappfonts;&h000000004A8A77FF;&h0000000000000000;false
 Module=modCustomAppFonts;customappfonts/modCustomAppFonts.xojo_code;&h0000000070654FFF;&h000000004A8A77FF;false
 MenuBar=MenuBar1;customappfonts/MenuBar1.xojo_menu;&h000000000A1DCFFF;&h000000004A8A77FF;false
-Window=Window1;customappfonts/Window1.xojo_window;&h000000004A3757FF;&h000000004A8A77FF;false
+DesktopWindow=Window1;customappfonts/Window1.xojo_window;&h000000004A3757FF;&h000000004A8A77FF;false
 Class=App;customappfonts/App.xojo_code;&h000000004B2B87FF;&h000000004A8A77FF;false
 BuildSteps=Build Automation;Build Automation.xojo_code;&h0000000065CC27FF;&h0000000000000000;false
 Folder=resources;resources;&h0000000001C97FFF;&h0000000000000000;false

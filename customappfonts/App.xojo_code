@@ -1,9 +1,9 @@
 #tag Class
 Protected Class App
-Inherits Application
+Inherits DesktopApplication
 	#tag Event
-		Sub Open()
-		  App.AutoQuit = True
+		Sub Opening()
+		  App.AllowAutoQuit = True
 		  
 		  Redim AppFontFiles(-1)
 		  
