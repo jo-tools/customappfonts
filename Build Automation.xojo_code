@@ -32,7 +32,7 @@
 					If DebugBuild Then Return 'don't create .tgz for DebugRuns
 					
 					' bSILENT=True : don't show any error messages
-					Var bSILENT As Boolean = False
+					Var bSILENT As Boolean = True
 					
 					'Check Build Target
 					Select Case CurrentBuildTarget
@@ -463,8 +463,8 @@
 					
 					If DebugBuild Then Return 'don't create .zip for DebugRuns
 					
-					' bSILENT=True : don't show any error messages
-					Var bSILENT As Boolean = False
+					'bSILENT=True : don't show any error messages
+					Var bSILENT As Boolean = True
 					
 					'Check Build Target
 					Select Case CurrentBuildTarget
