@@ -3,7 +3,7 @@ Begin DesktopWindow Window1
    Backdrop        =   0
    BackgroundColor =   &cFFFFFF00
    Composite       =   False
-   DefaultLocation =   0
+   DefaultLocation =   2
    FullScreen      =   False
    HasBackgroundColor=   False
    HasCloseButton  =   True
@@ -333,12 +333,6 @@ End
 	#tag Event
 		Sub Opening()
 		  Me.Title = constAppName
-		  
-		  #If TargetMacOS Then
-		    Var rect As Xojo.Rect = Self.Bounds
-		    rect.Top = DesktopDisplay.DisplayAt(0).AvailableTop
-		    Self.Bounds = rect
-		  #EndIf
 		  
 		End Sub
 	#tag EndEvent
