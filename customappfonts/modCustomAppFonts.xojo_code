@@ -16,21 +16,21 @@ Protected Module modCustomAppFonts
 		    
 		    Const FR_PRIVATE = &h10
 		    
-		    If privateFont And System.IsFunctionAvailable( "AddFontResourceExW", "Gdi32" ) Then
+		    If privateFont And System.IsFunctionAvailable("AddFontResourceExW", "Gdi32") Then
 		      // If the user wants to install it as a private font, then we need to
 		      // use the Ex APIs.  Otherwise, use the regular APIs.  We know
 		      // that AddFontResourceEx is available in Win2k and up, so if
 		      // the private flag is specified, we have to check to make sure
 		      // we can load the API as well.  We won't bother with the A
 		      // version of the call since we know the W version will be there.
-		      AddFontResourceExW( fontFile.NativePath, FR_PRIVATE, 0 )
+		      AddFontResourceExW(fontFile.NativePath, FR_PRIVATE, 0)
 		    Else
 		      // The user wants to install it as a public font, or they are running
 		      // on an OS without the ability to make private fonts
-		      If System.IsFunctionAvailable( "AddFontResourceW", "Gdi32" ) Then
-		        AddFontResourceW( fontFile.NativePath )
+		      If System.IsFunctionAvailable("AddFontResourceW", "Gdi32") Then
+		        AddFontResourceW(fontFile.ShellPath)
 		      Else
-		        AddFontResourceA( fontFile.NativePath )
+		        AddFontResourceA(fontFile.ShellPath)
 		      End If
 		    End If
 		    
@@ -45,7 +45,7 @@ Protected Module modCustomAppFonts
 		    // https://www.freedesktop.org/software/fontconfig/fontconfig-devel/fcconfigappfontclear.html
 		    
 		    
-		    If System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) And System.IsFunctionAvailable( "FcConfigAppFontAddFile", "libfontconfig" ) Then
+		    If System.IsFunctionAvailable("FcConfigGetCurrent", "libfontconfig") And System.IsFunctionAvailable("FcConfigAppFontAddFile", "libfontconfig") Then
 		      Soft Declare Function FcConfigGetCurrent Lib "libfontconfig" () As Ptr
 		      Soft Declare Function FcConfigAppFontAddFile Lib "libfontconfig" (ptr2FcConfig As Ptr, ptrToFile As CString) As Boolean
 		      
@@ -120,16 +120,6 @@ Protected Module modCustomAppFonts
 		  #EndIf
 		End Sub
 	#tag EndMethod
-
-
-	#tag Note, Name = KnownBug
-		Xojo 2016r4, Xojo 2017r1
-		************************
-		TargetWindows: Font's can't be temporarily installed due to changes in the graphics framework.
-		For Xojo 2017r2 or newer, check the Feedback: <feedback://showreport?report_id=46596>
-		
-		
-	#tag EndNote
 
 
 	#tag ViewBehavior
