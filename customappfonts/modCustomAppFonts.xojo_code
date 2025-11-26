@@ -23,7 +23,7 @@ Protected Module modCustomAppFonts
 		      // the private flag is specified, we have to check to make sure
 		      // we can load the API as well.  We won't bother with the A
 		      // version of the call since we know the W version will be there.
-		      AddFontResourceExW(fontFile.NativePath, FR_PRIVATE, 0)
+		      AddFontResourceExW(fontFile.ShellPath, FR_PRIVATE, 0)
 		    Else
 		      // The user wants to install it as a public font, or they are running
 		      // on an OS without the ability to make private fonts
@@ -83,14 +83,14 @@ Protected Module modCustomAppFonts
 		    
 		    Const FR_PRIVATE = &h10
 		    
-		    If System.IsFunctionAvailable( "RemoveFontResourceExW", "Gdi32" ) Then
-		      RemoveFontResourceExW( fontFile.NativePath, FR_PRIVATE, 0 )
+		    If System.IsFunctionAvailable("RemoveFontResourceExW", "Gdi32") Then
+		      RemoveFontResourceExW(fontFile.ShellPath, FR_PRIVATE, 0)
 		    End If
 		    
 		    If System.IsFunctionAvailable( "RemoveFontResourceW", "Gdi32" ) Then
-		      RemoveFontResourceW( fontFile.NativePath )
+		      RemoveFontResourceW(fontFile.ShellPath)
 		    Else
-		      RemoveFontResourceA( fontFile.NativePath )
+		      RemoveFontResourceA(fontFile.ShellPath)
 		    End If
 		    
 		  #ElseIf TargetLinux Then
@@ -103,7 +103,7 @@ Protected Module modCustomAppFonts
 		    // Note: we can only clear ALL app fonts!
 		    // And it seems this doesn't work with all distributions...
 		    
-		    If System.IsFunctionAvailable( "FcConfigGetCurrent", "libfontconfig" ) And System.IsFunctionAvailable( "FcConfigAppFontClear", "libfontconfig" ) Then
+		    If System.IsFunctionAvailable("FcConfigGetCurrent", "libfontconfig") And System.IsFunctionAvailable("FcConfigAppFontClear", "libfontconfig") Then
 		      Soft Declare Function FcConfigGetCurrent Lib "libfontconfig" () As Ptr
 		      Soft Declare Sub FcConfigAppFontClear Lib "libfontconfig" (ptr2FcConfig As Ptr)
 		      
