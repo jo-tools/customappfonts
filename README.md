@@ -23,12 +23,14 @@ Example application: **Linux**
 [Xojo](https://www.xojo.com/) is a rapid application development for Desktop, Web, Mobile & Raspberry Pi.  
 
 The Desktop application Xojo example project ```CustomAppFonts.xojo_project``` is using:
-- Xojo 2025r2.1
+- Xojo 2026r1.2
 - API 2
 
 ### How to use in your own Xojo project?
 1. **macOS:** [Fonts](./fonts) are being added using
-   - ```Info.plist``` *(see the corresponding project item)* 
+   - Build Settings: macOS
+     - Property List Editor: Add the following key/value (as string)  
+       Key: `ATSApplicationFontsPath`, Value: `AppFonts/`
    - Post-Build ```CopyFiles```-Step
      - Destination: ```Resources Folder```, Sub Directory: ```AppFonts```
 2. **Windows/Linux:** [Fonts](./fonts) are being added using
