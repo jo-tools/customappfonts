@@ -28,7 +28,9 @@ The Desktop application Xojo example project ```CustomAppFonts.xojo_project``` i
 
 ### How to use in your own Xojo project?
 1. **macOS:** [Fonts](./fonts) are being added using
-   - ```Info.plist``` *(see the corresponding project item)* 
+   - Build Settings: macOS
+     - Property List Editor: Add the following key/value (as string)  
+       Key: `ATSApplicationFontsPath`, Value: `AppFonts/`
    - Post-Build ```CopyFiles```-Step
      - Destination: ```Resources Folder```, Sub Directory: ```AppFonts```
 2. **Windows/Linux:** [Fonts](./fonts) are being added using
